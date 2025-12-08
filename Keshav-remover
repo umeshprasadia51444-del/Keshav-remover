@@ -1,0 +1,32 @@
+index.html
+<!DOCTYPE html>
+<html>
+<head>
+<title>Keshav Remover</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body { text-align: center; font-family: Arial; }
+h1 { margin-top: 30px; }
+input { margin-top: 20px; }
+</style>
+</head>
+<body>
+<h1>Welcome to Keshav Remover</h1>
+<p>Select an image to remove background</p>
+
+<input type="file" id="upload">
+<div id="result"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@imgly/background-removal@1.5.4/dist/index.min.js"></script>
+<script>
+document.getElementById("upload").addEventListener("change", async (e) => {
+  let file = e.target.files[0];
+  let blob = await removeBackground(file);
+  let url = URL.createObjectURL(blob);
+  document.getElementById("result").innerHTML = "<img src='"+url+"' style='width:90%; margin-top:20px; border-radius:10px;'>";
+});
+</script>
+
+<p style="margin-top: 50px;">Created by YOURR ASHISH</p>
+</body>
+</html>
