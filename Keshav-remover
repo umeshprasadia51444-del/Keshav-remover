@@ -1,32 +1,40 @@
-index.html
 <!DOCTYPE html>
 <html>
 <head>
-<title>Keshav Remover</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<style>
-body { text-align: center; font-family: Arial; }
-h1 { margin-top: 30px; }
-input { margin-top: 20px; }
-</style>
+  <title>Keshav Remover</title>
 </head>
-<body>
-<h1>Welcome to Keshav Remover</h1>
-<p>Select an image to remove background</p>
+<body style="text-align: center;">
+  <h2>Keshav Background Remover</h2>
 
-<input type="file" id="upload">
-<div id="result"></div>
+  <input type="file" id="fileInput"><br><br>
+  <button onclick="removeBG()">Remove Background</button>
 
-<script src="https://cdn.jsdelivr.net/npm/@imgly/background-removal@1.5.4/dist/index.min.js"></script>
+  <br><br>
+  <img id="resultImage" style="max-width: 300px; display:none;">
+  
 <script>
-document.getElementById("upload").addEventListener("change", async (e) => {
-  let file = e.target.files[0];
-  let blob = await removeBackground(file);
-  let url = URL.createObjectURL(blob);
-  document.getElementById("result").innerHTML = "<img src='"+url+"' style='width:90%; margin-top:20px; border-radius:10px;'>";
-});
+  async function removeBG() {
+      let file = document.getElementById("fileInput").files[0];
+      if (!file) {
+          alert("Please upload an image first");
+          return;
+      }
+
+      let formData = new FormData();
+      formData.append("image_file", file);
+
+      let response = await fetch("https://api.remove.bg/v1.0/removebg", {
+          method: "POST",
+          headers: { "X-Api-Key": "WEK2brBrzwKEXf6W" },
+          body: formData
+      });
+
+      let blob = await response.blob();
+      document.getElementById("resultImage").src = URL.createObjectURL(blob);
+      document.getElementById("resultImage").style.display = "block";
+  }
 </script>
 
-<p style="margin-top: 50px;">Created by YOURR ASHISH</p>
+  <p>Created by Keshav ❤️</p>
 </body>
 </html>
